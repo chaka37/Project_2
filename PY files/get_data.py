@@ -35,4 +35,8 @@ def get_company(ticker, start, end, alpaca):
         end
         ).df.drop(["trade_count", "vwap"], axis=1)
     return ticker
+ticker_df = get_company()
 
+def save_csv():
+    ticker_df.to_csv('../Project_2/stock_data.csv', index=True)
+    return ticker_df
