@@ -2,7 +2,7 @@
 #### Domenic Rhedrick, Ayana Martinez, Tempest Bowden, Liam Kelly
 
 ## Motivation and Summary 
-### **Artificial Neural Net (ANN)
+ **Artificial Neural Net (ANN)
 #### ***Thorough examination of data
 ### **Classification
 #### ***Supervised Model
