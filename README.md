@@ -43,7 +43,8 @@
 ## When fitting the model, we ran it for 50, 100 and 500 epochs, comparing the results
 
 # Model Evaluation 
-## Accuracy Score 0.95
+## Accuracy Score 
+### 0.95
 ## Confusion Matrix
 ### Precision vs. Recall
 ## Classification Report
