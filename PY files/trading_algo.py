@@ -15,28 +15,32 @@ def read_data(filename):
 
 data = read_data()
 
-def xy_matrix(xcolumn1, xcolumn2, ycolumn, read_data):
-    X = data[[]]
+def xy_matrix(xcolumn1, xcolumn2, ycolumn, data):
+    X = data[[xcolumn1, xcolumn2]]
     X = X.drop(X.index[1258])
-    y = data[[]].shift(1)
+    y = data[[ycolumn]].shift(1)
     y = y.dropna()
     return X, y
 
-def split_scalling():
-    X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=1)
-    sc = StandardScaler()
-    X_train_scaled = sc.fit_transform(X_train)
-    X_test_scaled = sc.transform(X_test)
+X,y = xy_matrix('8EWMA', '20EWMA', 'Signal', data)
 
-    ann = tf.keras.models.Sequential()
-    ann.add(tf.keras.layers.Dense(units=100,activation="sigmoid"))
-    ann.add(tf.keras.layers.Dense(units=50,activation="sigmoid"))
-    ann.add(tf.keras.layers.Dense(units=40,activation="tanh"))
-    ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
-    ann.compile(optimizer="adam",loss="binary_crossentropy",metrics=['accuracy'])
-    ann.fit(X_train_scaled,y_train,batch_size=32,epochs = 500)
-    ann_loss, ann_accuracy = ann.evaluate(X_test_scaled, y_test, verbose=2)
-    predictions = ann.predict(X_test_scaled)
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=1)
+sc = StandardScaler()
+X_train_scaled = sc.fit_transform(X_train)
+X_test_scaled = sc.transform(X_test) 
+
+
+def ann_function(X_train_scaled,X_test_scaled,y_train,y_test):
+     ann = tf.keras.models.Sequential()
+     ann.add(tf.keras.layers.Dense(units=100,activation="sigmoid"))
+     ann.add(tf.keras.layers.Dense(units=50,activation="sigmoid"))
+     ann.add(tf.keras.layers.Dense(units=40,activation="tanh"))
+     ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
+     ann.compile(optimizer="adam",loss="binary_crossentropy",metrics=["accuracy"])
+     ann.fit(X_train_scaled,y_train,batch_size=32,epochs = 500)
+     ann_loss, ann_accuracy = ann.evaluate(X_test_scaled, y_test, verbose=2)
+     predictions = ann.predict(X_test_scaled)
+     return predictions, ann_loss, ann_accuracy
 
 
 predictions_df = pd.DataFrame(predictions)
